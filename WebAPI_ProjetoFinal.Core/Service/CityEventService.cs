@@ -15,5 +15,9 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             return _cityEventRepository.ConsultarEvento();
         }
+        public CityEvent ConsultarEventoPorId(long id)
+        {
+            return _cityEventRepository.ConsultarEventoPorId(id);
+        }
     }
 }

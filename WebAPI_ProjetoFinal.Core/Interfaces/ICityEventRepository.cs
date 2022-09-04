@@ -10,5 +10,7 @@ namespace WebAPI_ProjetoFinal.Core.Interfaces
     public interface ICityEventRepository
     {
         List<CityEvent> ConsultarEvento();
+        CityEvent ConsultarEventoPorId(long id);
+
     }
 }

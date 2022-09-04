@@ -1,6 +1,7 @@
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Service;
 using WebAPI_ProjetoFinal.Infra.Data.Repository;
+using WebAPI_ProjetoFinal.Infra.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICityEventService, CityEventService>();
 builder.Services.AddScoped<ICityEventRepository, CityEventRepository>();
+builder.Services.AddScoped<IConnectionDataBase, ConnectionDataBase>();
 
 var app = builder.Build();
 

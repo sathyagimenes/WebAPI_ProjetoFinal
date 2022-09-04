@@ -5,6 +5,6 @@ namespace WebAPI_ProjetoFinal.Core.Interfaces
     public interface ICityEventService
     {
         List<CityEvent> ConsultarEvento();
-
+        CityEvent ConsultarEventoPorId(long id);
     }
 }
