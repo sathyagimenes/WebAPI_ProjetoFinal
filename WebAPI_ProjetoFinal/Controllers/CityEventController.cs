@@ -21,6 +21,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         {
             return Ok(_cityEvent.ConsultarEvento());
         }
+
         [HttpGet("/CityEvent/{id}/Consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -34,5 +35,28 @@ namespace WebAPI_ProjetoFinal.Controllers
             return Ok(evento);
         }
 
+        [HttpPost("/CityEvent/Insert")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public ActionResult<CityEvent> InsertEvent(CityEvent cityEvent)
+        {
+            if (!_cityEvent.InsertEvent(cityEvent))
+            {
+                return BadRequest();
+            }
+            return CreatedAtAction(nameof(InsertEvent), cityEvent);
+        }
+
+        [HttpDelete("/CityEvent/{id}/Delete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteEvent(long id)
+        {
+            if (!_cityEvent.DeleteEvent(id))
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }

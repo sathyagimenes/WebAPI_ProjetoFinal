@@ -11,6 +11,8 @@ namespace WebAPI_ProjetoFinal.Core.Interfaces
     {
         List<CityEvent> ConsultarEvento();
         CityEvent ConsultarEventoPorId(long id);
+        bool DeleteEvent(long id);
+        bool InsertEvent(CityEvent cityEvent);
 
     }
 }

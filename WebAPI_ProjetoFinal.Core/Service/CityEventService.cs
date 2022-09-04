@@ -19,5 +19,13 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             return _cityEventRepository.ConsultarEventoPorId(id);
         }
+        public bool DeleteEvent(long id)
+        {
+            return _cityEventRepository.DeleteEvent(id);
+        }
+        public bool InsertEvent(CityEvent cityEvent)
+        {
+            return _cityEventRepository.InsertEvent(cityEvent);
+        }
     }
 }
