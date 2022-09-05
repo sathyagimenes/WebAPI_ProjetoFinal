@@ -27,5 +27,9 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             return _cityEventRepository.InsertEvent(cityEvent);
         }
+        public bool UpdateEvent(long id, CityEvent cityEvent)
+        {
+            return _cityEventRepository.UpdateEvent(id, cityEvent);
+        }
     }
 }

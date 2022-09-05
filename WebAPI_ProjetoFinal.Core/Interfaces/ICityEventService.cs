@@ -8,5 +8,6 @@ namespace WebAPI_ProjetoFinal.Core.Interfaces
         CityEvent ConsultarEventoPorId(long id);
         bool DeleteEvent(long id);
         bool InsertEvent(CityEvent cityEvent);
+        bool UpdateEvent(long id, CityEvent cityEvent);
     }
 }

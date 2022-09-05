@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 
@@ -45,6 +44,19 @@ namespace WebAPI_ProjetoFinal.Controllers
                 return BadRequest();
             }
             return CreatedAtAction(nameof(InsertEvent), cityEvent);
+        }
+
+        [HttpPut("/CityEvent/{id}/Update")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult UpdateEvent(long id, CityEvent cityEvent)
+        {
+            if (!_cityEvent.UpdateEvent(id, cityEvent))
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
 
         [HttpDelete("/CityEvent/{id}/Delete")]
