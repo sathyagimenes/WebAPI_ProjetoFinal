@@ -29,9 +29,8 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         }
         public bool InsertEvent(CityEvent cityEvent)
         {
-            var query = "INSERT INTO CityEvent VALUES (@IdEvent, @Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
+            var query = "INSERT INTO CityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
             var parameters = new DynamicParameters();
-            parameters.Add("IdEvent", cityEvent.IdEvent);
             parameters.Add("Title", cityEvent.Title);
             parameters.Add("Description", cityEvent.Description);
             parameters.Add("DateHourEvent", cityEvent.DateHourEvent);

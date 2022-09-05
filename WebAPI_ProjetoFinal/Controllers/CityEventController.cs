@@ -9,10 +9,14 @@ namespace WebAPI_ProjetoFinal.Controllers
     public class CityEventController : ControllerBase
     {
         public ICityEventService _cityEvent;
-        public CityEventController(ICityEventService cityEvent)
+        private readonly IEventReservationService _eventReservationService;
+        public CityEventController(ICityEventService cityEvent, IEventReservationService eventReservationService)
         {
             _cityEvent = cityEvent;
+            _eventReservationService = eventReservationService;
         }
+
+        #region CityEvent
 
         [HttpGet("/CityEvent/Consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -70,5 +74,23 @@ namespace WebAPI_ProjetoFinal.Controllers
             }
             return Ok();
         }
+        #endregion
+
+        #region EventReservation
+
+        [HttpPost("/EventReservation/Insert")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public IActionResult InsertReservation(EventReservation eventReservation)
+        {
+            if (!_eventReservationService.InsertReservation(eventReservation))
+            {
+                return BadRequest();
+            }
+            return CreatedAtAction(nameof(InsertReservation), eventReservation);
+        }
+
+
+        #endregion
     }
 }
