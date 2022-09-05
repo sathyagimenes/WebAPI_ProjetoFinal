@@ -20,17 +20,17 @@ namespace WebAPI_ProjetoFinal.Controllers
 
         [HttpGet("/CityEvent/Consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<CityEvent>> ConsultaCityEvent()
+        public ActionResult<List<CityEvent>> SearchEvents()
         {
-            return Ok(_cityEvent.ConsultarEvento());
+            return Ok(_cityEvent.SearchEvents());
         }
 
         [HttpGet("/CityEvent/{id}/Consulta")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CityEvent> ConsultarEventoPorId(long id)
+        public ActionResult<CityEvent> SearchEvent(long id)
         {
-            var evento = _cityEvent.ConsultarEventoPorId(id);
+            var evento = _cityEvent.SearchEvent(id);
             if (evento == null)
             {
                 return NotFound();
@@ -80,17 +80,17 @@ namespace WebAPI_ProjetoFinal.Controllers
 
         [HttpGet("/EventReservation/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<EventReservation>> SearchEvents()
+        public ActionResult<List<EventReservation>> SearchReservations()
         {
-            return Ok(_eventReservationService.SearchEvents());
+            return Ok(_eventReservationService.SearchReservations());
         }
 
         [HttpGet("/EventReservation/{id}/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<EventReservation> SearchEvent(long id)
+        public ActionResult<EventReservation> SearchReservation(long id)
         {
-            var reserva = _eventReservationService.SearchEvent(id);
+            var reserva = _eventReservationService.SearchReservation(id);
             if (reserva == null)
             {
                 return NotFound();
@@ -123,6 +123,17 @@ namespace WebAPI_ProjetoFinal.Controllers
             return NoContent();
         }
 
+        [HttpDelete("/EventReservation/{id}/Delete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteReservation(long id)
+        {
+            if (!_eventReservationService.DeleteReservation(id))
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
 
         #endregion
     }

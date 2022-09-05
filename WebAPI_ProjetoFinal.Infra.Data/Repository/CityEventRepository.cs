@@ -13,13 +13,13 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         {
             _database = database;
         }
-        public List<CityEvent> ConsultarEvento()
+        public List<CityEvent> SearchEvents()
         {
             var query = "SELECT * FROM CityEvent";
             using var conn = _database.CreateConnection();    
             return conn.Query<CityEvent>(query).ToList();
         }
-        public CityEvent ConsultarEventoPorId(long id)
+        public CityEvent SearchEvent(long id)
         {
             var query = "SELECT * FROM CityEvent WHERE IdEvent = @id";
             var parameters = new DynamicParameters();

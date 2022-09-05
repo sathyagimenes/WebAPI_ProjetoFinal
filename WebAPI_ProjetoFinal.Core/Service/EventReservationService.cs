@@ -15,21 +15,25 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             _eventReservationRepository = eventReservationRepository;
         }
+        public List<EventReservation> SearchReservations()
+        {
+            return _eventReservationRepository.SearchReservations();
+        }
+        public EventReservation SearchReservation(long id)
+        {
+            return _eventReservationRepository.SearchReservation(id);
+        }
         public bool InsertReservation(EventReservation reservation)
         {
             return _eventReservationRepository.InsertReservation(reservation);
         }
-        public List<EventReservation> SearchEvents()
-        {
-            return _eventReservationRepository.SearchEvents();
-        }
-        public EventReservation SearchEvent(long id)
-        {
-            return _eventReservationRepository.SearchEvent(id);
-        }
         public bool UpdateReservation(long id, EventReservation reservation)
         {
             return _eventReservationRepository.UpdateReservation(id, reservation);
+        }
+        public bool DeleteReservation(long id)
+        {
+            return _eventReservationRepository.DeleteReservation(id);
         }
     }
 }

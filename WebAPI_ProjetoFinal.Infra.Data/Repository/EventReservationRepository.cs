@@ -12,14 +12,14 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             _database = database;
         }
 
-        public List<EventReservation> SearchEvents()
+        public List<EventReservation> SearchReservations()
         {
             var query = "SELECT * FROM EventReservation";
             using var conn = _database.CreateConnection();
             return conn.Query<EventReservation>(query).ToList();
         }
 
-        public EventReservation SearchEvent(long id)
+        public EventReservation SearchReservation(long id)
         {
             var query = "SELECT * FROM EventReservation WHERE IdReservation = @id";
             var parameters = new DynamicParameters();
@@ -50,6 +50,15 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             parameters.Add("IdEvent", reservation.IdEvent);
             parameters.Add("PersonName", reservation.PersonName);
             parameters.Add("Quantity", reservation.Quantity);
+            parameters.Add("id", id);
+            using var conn = _database.CreateConnection();
+            return conn.Execute(query, parameters) == 1;
+        }
+
+        public bool DeleteReservation(long id)
+        {
+            var query = "DELETE FROM EventReservation WHERE IdReservation = @id";
+            var parameters = new DynamicParameters();
             parameters.Add("id", id);
             using var conn = _database.CreateConnection();
             return conn.Execute(query, parameters) == 1;

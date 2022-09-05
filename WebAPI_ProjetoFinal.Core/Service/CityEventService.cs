@@ -11,13 +11,13 @@ namespace WebAPI_ProjetoFinal.Core.Service
             _cityEventRepository = cityEventRepository;
         }
 
-        public List<CityEvent> ConsultarEvento()
+        public List<CityEvent> SearchEvents()
         {
-            return _cityEventRepository.ConsultarEvento();
+            return _cityEventRepository.SearchEvents();
         }
-        public CityEvent ConsultarEventoPorId(long id)
+        public CityEvent SearchEvent(long id)
         {
-            return _cityEventRepository.ConsultarEventoPorId(id);
+            return _cityEventRepository.SearchEvent(id);
         }
         public bool DeleteEvent(long id)
         {
