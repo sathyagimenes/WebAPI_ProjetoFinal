@@ -46,7 +46,6 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         public bool UpdateEvent(long id, CityEvent cityEvent)
         {
             var query = @"UPDATE CityEvent SET 
-                        IdEvent = @NovoId,
                         Title = @Title,
                         Description = @Description,
                         DateHourEvent = @DateHourEvent,
@@ -55,7 +54,6 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
                         Price = @Price
                         WHERE IdEvent = @id";
             var parameters = new DynamicParameters();
-            parameters.Add("NovoId", cityEvent.IdEvent);
             parameters.Add("Title", cityEvent.Title);
             parameters.Add("Description", cityEvent.Description);
             parameters.Add("DateHourEvent", cityEvent.DateHourEvent);

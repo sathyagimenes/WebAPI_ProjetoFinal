@@ -78,6 +78,26 @@ namespace WebAPI_ProjetoFinal.Controllers
 
         #region EventReservation
 
+        [HttpGet("/EventReservation/Search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<List<EventReservation>> SearchEvents()
+        {
+            return Ok(_eventReservationService.SearchEvents());
+        }
+
+        [HttpGet("/EventReservation/{id}/Search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<EventReservation> SearchEvent(long id)
+        {
+            var reserva = _eventReservationService.SearchEvent(id);
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+            return Ok(reserva);
+        }
+
         [HttpPost("/EventReservation/Insert")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -88,6 +108,19 @@ namespace WebAPI_ProjetoFinal.Controllers
                 return BadRequest();
             }
             return CreatedAtAction(nameof(InsertReservation), eventReservation);
+        }
+
+        [HttpPut("/EventReservation/{id}/Update")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult UpdateReservation(long id, EventReservation reservation)
+        {
+            if (!_eventReservationService.UpdateReservation(id, reservation))
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
 
 
