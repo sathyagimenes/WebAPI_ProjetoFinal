@@ -48,3 +48,16 @@ Para o EventReservation, construa os métodos:
 - Edição da quantidade de uma reserva; *Autenticação e Autorização admin
 - Remoção de uma reserva; *Autenticação e Autorização admin
 - Consulta de reserva pelo PersonName e Title do evento, utilizando similaridade para o title; *Autenticação
+<br/>
+<br/>
+
+## :hammer: Como executar o programa
+- Clone o repositório em uma pasta local: `git clone https://github.com/sathyagimenes/WebAPI_ProjetoFinal.git`
+- Abra a solução do projeto com o Visual Studio: arquivo `WebAPI_ProjetoFinal.sln`
+- Abra o arquivo `appsettings.json` e informe os dados para estabelecer a conexão com o banco de dados.
+```
+  "ConnectionStrings": {
+        "DefaultConnection": "Server= <Digite o endereço do servidor>; Database= <Informe a base de dados>; User Id= <Digite seu usuário>; Password= <Digite sua senha> ; Encrypt=False"
+        }
+```
+- Execute o projeto com `CTRL + F5`
