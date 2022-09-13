@@ -106,12 +106,12 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeleteEvent(long id)
         {
-            if (!_cityEvent.DeleteEvent(id))
+            var result = _cityEvent.DeleteEvent(id);
+            if (result == "Evento não encontrado")
             {
-                return NotFound();
+                return NotFound(result);
             }
-            return Ok();
+            return Ok(result);
         }
-
     }
 }

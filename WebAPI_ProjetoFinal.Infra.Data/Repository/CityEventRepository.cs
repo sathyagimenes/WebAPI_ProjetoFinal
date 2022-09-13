@@ -95,13 +95,37 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             return conn.Execute(query, parameters) == 1;
         }
 
-        public bool DeleteEvent(long id)
+        public string DeleteEvent(long id)
         {
-            var query = "DELETE FROM CityEvent WHERE IdEvent = @id";
+            var reservations = SearchReservations(id);
+            if (reservations == 0)
+            {
+                var query = "DELETE FROM CityEvent WHERE IdEvent = @id";
+                var parameters = new DynamicParameters();
+                parameters.Add("id", id);
+                using var conn = _database.CreateConnection();
+                if (conn.Execute(query, parameters) == 1)
+                    return "Evento deletado com sucesso";
+            }
+            else if (reservations > 0)
+            {
+                var query = "UPDATE CityEvent SET Status = 0 WHERE IdEvent = @id";
+                var parameters = new DynamicParameters();
+                parameters.Add("id", id);
+                using var conn = _database.CreateConnection();
+                if (conn.Execute(query, parameters) == 1)
+                    return "Este evento possui reservas. Status alterado para inativo com sucesso";
+            }
+            return "Evento não encontrado";
+        }
+
+        private int SearchReservations(long id)
+        {
+            var query = "SELECT Quantity FROM EventReservation WHERE IdEvent = @id";
             var parameters = new DynamicParameters();
             parameters.Add("id", id);
             using var conn = _database.CreateConnection();
-            return conn.Execute(query, parameters) == 1;
+            return conn.Query<int>(query, parameters).Sum();
         }
     }
 }
