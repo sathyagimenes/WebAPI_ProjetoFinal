@@ -35,7 +35,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         }
         public CityEvent SearchEventLocalDate(string local, DateTime dateTime)
         {
-            var query = "SELECT * FROM CityEvent WHERE Local = @local, DateHourEvent LIKE '%@dateTime%";
+            var query = "SELECT * FROM CityEvent WHERE Local = @local AND DateHourEvent = @dateTime";
             var parameters = new DynamicParameters();
             parameters.Add("local", local);
             parameters.Add("dateTime", dateTime);
