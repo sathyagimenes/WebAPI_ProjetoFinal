@@ -43,7 +43,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         {
             var evento = _cityEvent.SearchEventTitle(title);
 
-            if (evento == null)
+            if (evento == null || evento.Count == 0)
             {
                 return NotFound();
             }
