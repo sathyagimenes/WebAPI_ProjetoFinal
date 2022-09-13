@@ -63,6 +63,19 @@ namespace WebAPI_ProjetoFinal.Controllers
             return Ok(evento);
         }
 
+        [HttpGet("/CityEvent/SearchByPrice")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<CityEvent> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime dateTime)
+        {
+            var evento = _cityEvent.SearchByPrice(minPrice, maxPrice, dateTime);
+            if (evento == null || evento.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(evento);
+        }
+
         [HttpPost("/CityEvent/Insert")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]

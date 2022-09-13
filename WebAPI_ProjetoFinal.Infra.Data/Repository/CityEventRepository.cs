@@ -35,12 +35,23 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         }
         public CityEvent SearchEventLocalDate(string local, DateTime dateTime)
         {
-            var query = "SELECT * FROM CityEvent WHERE Local = @local AND DateHourEvent = @dateTime";
+            var query = "SELECT * FROM CityEvent WHERE Local = @local AND CONVERT(DATE, dateHourEvent) = @dateTime";
             var parameters = new DynamicParameters();
             parameters.Add("local", local);
             parameters.Add("dateTime", dateTime);
             using var conn = _database.CreateConnection();
             return conn.QueryFirstOrDefault<CityEvent>(query, parameters);
+        }
+
+        public List<CityEvent> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime dateTime)
+        {
+            var query = "SELECT * FROM CityEvent WHERE CONVERT(DATE, dateHourEvent) = @dateTime AND Price BETWEEN @minPrice AND @maxPrice";
+            var parameters = new DynamicParameters();
+            parameters.Add("dateTime", dateTime);
+            parameters.Add("minPrice", minPrice);
+            parameters.Add("maxPrice", maxPrice);
+            using var conn = _database.CreateConnection();
+            return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
         public bool InsertEvent(CityEvent cityEvent)
