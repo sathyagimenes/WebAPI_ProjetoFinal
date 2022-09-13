@@ -6,6 +6,8 @@ namespace WebAPI_ProjetoFinal.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     public class CityEventController : ControllerBase
     {
         public ICityEventService _cityEvent;
@@ -14,19 +16,46 @@ namespace WebAPI_ProjetoFinal.Controllers
             _cityEvent = cityEvent;
         }
 
-        [HttpGet("/CityEvent/Consulta")]
+        [HttpGet("/CityEvent/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<CityEvent>> SearchEvents()
         {
             return Ok(_cityEvent.SearchEvents());
         }
 
-        [HttpGet("/CityEvent/{id}/Consulta")]
+        [HttpGet("/CityEvent/{id}/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<CityEvent> SearchEvent(long id)
         {
             var evento = _cityEvent.SearchEvent(id);
+            if (evento == null)
+            {
+                return NotFound();
+            }
+            return Ok(evento);
+        }
+
+        [HttpGet("/CityEvent/{title}/SearchTitle")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<List<CityEvent>> SearchEventTitle(string title)
+        {
+            var evento = _cityEvent.SearchEventTitle(title);
+
+            if (evento == null)
+            {
+                return NotFound();
+            }
+            return Ok(evento);
+        }
+
+        [HttpGet("/CityEvent/{local}/SearchLocalDate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<CityEvent> SearchEventLocalDate(string local, DateTime dateTime)
+        {
+            var evento = _cityEvent.SearchEventLocalDate(local, dateTime);
             if (evento == null)
             {
                 return NotFound();

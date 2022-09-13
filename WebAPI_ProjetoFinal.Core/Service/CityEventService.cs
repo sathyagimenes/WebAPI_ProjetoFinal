@@ -19,6 +19,14 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             return _cityEventRepository.SearchEvent(id);
         }
+        public List<CityEvent> SearchEventTitle(string title)
+        {
+            return _cityEventRepository.SearchEventTitle(title);
+        }
+        public CityEvent SearchEventLocalDate(string local, DateTime dateTime)
+        {
+            return _cityEventRepository.SearchEventLocalDate(local, dateTime);
+        }
         public bool DeleteEvent(long id)
         {
             return _cityEventRepository.DeleteEvent(id);

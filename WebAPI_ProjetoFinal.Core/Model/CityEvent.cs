@@ -17,5 +17,8 @@ namespace WebAPI_ProjetoFinal.Core.Model
         public string Local { get; set; }
         public string Address { get; set; }
         public decimal Price { get; set; }
+
+        [Required(ErrorMessage = "Status é obrigatório")]
+        public bool Status { get; set; }
     }
 }

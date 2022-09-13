@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebAPI_ProjetoFinal.Core.Model;
+﻿using WebAPI_ProjetoFinal.Core.Model;
 
 namespace WebAPI_ProjetoFinal.Core.Interfaces
 {
@@ -11,6 +6,8 @@ namespace WebAPI_ProjetoFinal.Core.Interfaces
     {
         List<CityEvent> SearchEvents();
         CityEvent SearchEvent(long id);
+        List<CityEvent> SearchEventTitle(string title);
+        CityEvent SearchEventLocalDate(string local, DateTime dateTime);
         bool DeleteEvent(long id);
         bool InsertEvent(CityEvent cityEvent);
         bool UpdateEvent(long id, CityEvent cityEvent);

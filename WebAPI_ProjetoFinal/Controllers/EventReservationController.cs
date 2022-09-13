@@ -6,6 +6,8 @@ namespace WebAPI_ProjetoFinal.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     public class EventReservationController : ControllerBase
     {
         private readonly IEventReservationService _eventReservationService;
