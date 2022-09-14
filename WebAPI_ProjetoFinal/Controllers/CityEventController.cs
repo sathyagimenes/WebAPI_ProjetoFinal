@@ -102,7 +102,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         }
 
         [HttpDelete("/CityEvent/{id}/Delete")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult DeleteEvent(long id)
         {

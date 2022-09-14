@@ -50,8 +50,16 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             parameters.Add("dateTime", dateTime);
             parameters.Add("minPrice", minPrice);
             parameters.Add("maxPrice", maxPrice);
-            using var conn = _database.CreateConnection();
-            return conn.Query<CityEvent>(query, parameters).ToList();
+            try
+            {
+                using var conn = _database.CreateConnection();
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
+                return null; //posso fazer isso?
+            }
         }
 
         public bool InsertEvent(CityEvent cityEvent)
