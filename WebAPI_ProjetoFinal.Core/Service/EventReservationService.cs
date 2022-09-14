@@ -19,17 +19,17 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             return _eventReservationRepository.SearchReservations();
         }
-        public EventReservation SearchReservation(long id)
+        public List<EventReservation> SearchReservation(string personName, string title)
         {
-            return _eventReservationRepository.SearchReservation(id);
+            return _eventReservationRepository.SearchReservation(personName, title);
         }
         public bool InsertReservation(EventReservation reservation)
         {
             return _eventReservationRepository.InsertReservation(reservation);
         }
-        public bool UpdateReservation(long id, EventReservation reservation)
+        public bool UpdateReservationQuantity(long id, EventReservation reservation)
         {
-            return _eventReservationRepository.UpdateReservation(id, reservation);
+            return _eventReservationRepository.UpdateReservationQuantity(id, reservation);
         }
         public bool DeleteReservation(long id)
         {

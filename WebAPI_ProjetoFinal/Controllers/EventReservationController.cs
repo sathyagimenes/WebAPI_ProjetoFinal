@@ -24,13 +24,13 @@ namespace WebAPI_ProjetoFinal.Controllers
             return Ok(_eventReservationService.SearchReservations());
         }
 
-        [HttpGet("/EventReservation/{id}/Search")]
+        [HttpGet("/EventReservation/{personName}/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<EventReservation> SearchReservation(long id)
+        public ActionResult<List<EventReservation>> SearchReservation(string personName, string title)
         {
-            var reserva = _eventReservationService.SearchReservation(id);
-            if (reserva == null)
+            var reserva = _eventReservationService.SearchReservation(personName, title);
+            if (reserva == null || reserva.Count == 0)
             {
                 return NotFound();
             }
@@ -53,9 +53,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult UpdateReservation(long id, EventReservation reservation)
+        public IActionResult UpdateReservationQuantity(long id, EventReservation reservation)
         {
-            if (!_eventReservationService.UpdateReservation(id, reservation))
+            if (!_eventReservationService.UpdateReservationQuantity(id, reservation))
             {
                 return NotFound();
             }

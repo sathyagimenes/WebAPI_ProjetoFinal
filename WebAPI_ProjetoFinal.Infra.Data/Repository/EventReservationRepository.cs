@@ -18,14 +18,17 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             using var conn = _database.CreateConnection();
             return conn.Query<EventReservation>(query).ToList();
         }
-
-        public EventReservation SearchReservation(long id)
+        public List<EventReservation> SearchReservation(string personName, string title)
         {
-            var query = "SELECT * FROM EventReservation WHERE IdReservation = @id";
+            var query = @"SELECT IdReservation, res.IdEvent, PersonName, Quantity
+                        FROM EventReservation AS res INNER JOIN CityEvent AS eve 
+                        ON res.IdEvent = eve.IdEvent AND eve.Title LIKE CONCAT('%',@title,'%') 
+                        AND res.PersonName = @personName";
             var parameters = new DynamicParameters();
-            parameters.Add("id", id);
+            parameters.Add("personName", personName);
+            parameters.Add("title", title);
             using var conn = _database.CreateConnection();
-            return conn.QueryFirstOrDefault<EventReservation>(query, parameters);
+            return conn.Query<EventReservation>(query, parameters).ToList();
         }
 
         public bool InsertReservation(EventReservation reservation)
@@ -39,18 +42,14 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             using var conn = _database.CreateConnection();
             return conn.Execute(query, parameters) == 1;
         }
-        public bool UpdateReservation(long id, EventReservation reservation)
+        public bool UpdateReservationQuantity(long idReservation, EventReservation reservation)
         {
             var query = @"UPDATE EventReservation SET
-                            IdEvent = @IdEvent,
-                            PersonName = @PersonName,
                             Quantity = @Quantity
-                            WHERE IdReservation = @id";
+                            WHERE IdReservation = @idReservation";
             var parameters = new DynamicParameters();
-            parameters.Add("IdEvent", reservation.IdEvent);
-            parameters.Add("PersonName", reservation.PersonName);
             parameters.Add("Quantity", reservation.Quantity);
-            parameters.Add("id", id);
+            parameters.Add("idReservation", idReservation);
             using var conn = _database.CreateConnection();
             return conn.Execute(query, parameters) == 1;
         }

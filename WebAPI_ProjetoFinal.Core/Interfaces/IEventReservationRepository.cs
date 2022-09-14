@@ -10,9 +10,9 @@ namespace WebAPI_ProjetoFinal.Core.Interfaces
     public interface IEventReservationRepository
     {
         List<EventReservation> SearchReservations();
-        EventReservation SearchReservation(long id);
+        List<EventReservation> SearchReservation(string personName, string title);
         bool InsertReservation(EventReservation reservation);
-        bool UpdateReservation(long id, EventReservation reservation);
+        bool UpdateReservationQuantity(long id, EventReservation reservation);
         bool DeleteReservation(long id);
     }
 }
