@@ -14,7 +14,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         public List<CityEvent> SearchEvents()
         {
             var query = "SELECT * FROM CityEvent";
-            using var conn = _database.CreateConnection();    
+            using var conn = _database.CreateConnection();
             return conn.Query<CityEvent>(query).ToList();
         }
         public CityEvent SearchEvent(long id)
@@ -66,9 +66,16 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             parameters.Add("Price", cityEvent.Price);
             parameters.Add("Status", cityEvent.Status);
 
-            using var conn = _database.CreateConnection();
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = _database.CreateConnection();
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
+                return false;
+            }
         }
 
         public bool UpdateEvent(long id, CityEvent cityEvent)
@@ -91,8 +98,16 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             parameters.Add("Price", cityEvent.Price);
             parameters.Add("Status", cityEvent.Status);
             parameters.Add("id", id);
-            using var conn = _database.CreateConnection();
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = _database.CreateConnection();
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
+                return false;
+            }
         }
 
         public string DeleteEvent(long id)

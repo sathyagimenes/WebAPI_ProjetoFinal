@@ -2,6 +2,7 @@ using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Service;
 using WebAPI_ProjetoFinal.Infra.Data.Repository;
 using WebAPI_ProjetoFinal.Infra.Data;
+using WebAPI_ProjetoFinal.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add<GeneralExceptionFilter>();
+}
+);
 
 builder.Services.AddScoped<ICityEventService, CityEventService>();
 builder.Services.AddScoped<ICityEventRepository, CityEventRepository>();

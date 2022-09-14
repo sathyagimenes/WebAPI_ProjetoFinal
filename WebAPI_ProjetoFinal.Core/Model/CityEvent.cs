@@ -6,7 +6,7 @@ namespace WebAPI_ProjetoFinal.Core.Model
     {
         public long IdEvent { get; set; }
 
-        [Required(ErrorMessage = "CPF é obrigatório")]
+        [Required(ErrorMessage = "Título é obrigatório")]
         public string Title { get; set; }
         public string Description { get; set; }
 
