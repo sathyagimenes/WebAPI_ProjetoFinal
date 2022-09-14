@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 
@@ -19,6 +20,7 @@ namespace WebAPI_ProjetoFinal.Controllers
 
         [HttpGet("/EventReservation/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize]
         public ActionResult<List<EventReservation>> SearchReservations()
         {
             return Ok(_eventReservationService.SearchReservations());
@@ -27,6 +29,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpGet("/EventReservation/{personName}/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public ActionResult<List<EventReservation>> SearchReservation(string personName, string title)
         {
             var reserva = _eventReservationService.SearchReservation(personName, title);
@@ -40,6 +43,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpPost("/EventReservation/Insert")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize]
         public IActionResult InsertReservation(EventReservation eventReservation)
         {
             if (!_eventReservationService.InsertReservation(eventReservation))
@@ -53,6 +57,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateReservationQuantity(long id, EventReservation reservation)
         {
             if (!_eventReservationService.UpdateReservationQuantity(id, reservation))
@@ -65,6 +70,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpDelete("/EventReservation/{id}/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteReservation(long id)
         {
             if (!_eventReservationService.DeleteReservation(id))

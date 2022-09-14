@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 
@@ -79,6 +80,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpPost("/CityEvent/Insert")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> InsertEvent(CityEvent cityEvent)
         {
             if (!_cityEvent.InsertEvent(cityEvent))
@@ -92,6 +94,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateEvent(long id, CityEvent cityEvent)
         {
             if (!_cityEvent.UpdateEvent(id, cityEvent))
@@ -104,6 +107,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpDelete("/CityEvent/{id}/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteEvent(long id)
         {
             var result = _cityEvent.DeleteEvent(id);
