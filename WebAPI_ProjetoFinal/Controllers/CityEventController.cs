@@ -92,6 +92,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpPost("/CityEvent/Insert")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> InsertEvent(CityEvent cityEvent)
         {
@@ -106,6 +107,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
         public IActionResult UpdateEvent(long id, CityEvent cityEvent)
         {
@@ -120,6 +122,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
         public IActionResult DeleteEvent(long id)
         {

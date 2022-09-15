@@ -22,6 +22,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpGet("/EventReservation/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         public ActionResult<List<EventReservation>> SearchReservations()
         {
@@ -32,6 +33,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         public ActionResult<List<EventReservation>> SearchReservation(string personName, string title)
         {
@@ -51,6 +53,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [TypeFilter(typeof(QuantityValidationActionFilter))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
         public IActionResult InsertReservation(EventReservation eventReservation)
         {
@@ -66,6 +69,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [TypeFilter(typeof(QuantityValidationActionFilter))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
         public IActionResult UpdateReservationQuantity(long id, EventReservation eventReservation)
         {
@@ -79,6 +83,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpDelete("/EventReservation/{id}/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(Roles = "admin")]
         public IActionResult DeleteReservation(long id)
         {
