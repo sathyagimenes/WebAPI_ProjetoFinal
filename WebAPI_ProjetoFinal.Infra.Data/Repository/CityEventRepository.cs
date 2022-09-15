@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Dapper;
+﻿using Dapper;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 
