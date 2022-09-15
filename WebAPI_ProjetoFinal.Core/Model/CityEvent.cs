@@ -20,5 +20,6 @@ namespace WebAPI_ProjetoFinal.Core.Model
 
         [Required(ErrorMessage = "Status é obrigatório")]
         public bool Status { get; set; }
+
     }
 }

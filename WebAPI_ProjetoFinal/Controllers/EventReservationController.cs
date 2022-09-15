@@ -20,20 +20,26 @@ namespace WebAPI_ProjetoFinal.Controllers
 
         [HttpGet("/EventReservation/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize]
         public ActionResult<List<EventReservation>> SearchReservations()
         {
             return Ok(_eventReservationService.SearchReservations());
         }
 
-        [HttpGet("/EventReservation/{personName}/Search")]
+        [HttpGet("/EventReservation/{personName}/{title}/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize]
         public ActionResult<List<EventReservation>> SearchReservation(string personName, string title)
         {
             var reserva = _eventReservationService.SearchReservation(personName, title);
-            if (reserva == null || reserva.Count == 0)
+            if (reserva == null)
+            {
+                return BadRequest();
+            }
+            else if(reserva.Count == 0)
             {
                 return NotFound();
             }

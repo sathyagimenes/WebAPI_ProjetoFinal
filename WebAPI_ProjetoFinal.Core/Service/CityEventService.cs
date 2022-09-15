@@ -31,7 +31,7 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             return _cityEventRepository.SearchByPrice(minPrice, maxPrice, dateTime);
         }
-        public string DeleteEvent(long id)
+        public bool DeleteEvent(long id)
         {
             return _cityEventRepository.DeleteEvent(id);
         }

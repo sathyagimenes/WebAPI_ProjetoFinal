@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System.Collections.Generic;
+using Dapper;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 
@@ -11,13 +12,13 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         {
             _database = database;
         }
-        public List<CityEvent> SearchEvents()
+        public List<CityEvent> SearchEvents() // excluir
         {
             var query = "SELECT * FROM CityEvent";
             using var conn = _database.CreateConnection();
             return conn.Query<CityEvent>(query).ToList();
         }
-        public CityEvent SearchEvent(long id)
+        public CityEvent SearchEvent(long id) //excluir
         {
             var query = "SELECT * FROM CityEvent WHERE IdEvent = @id";
             var parameters = new DynamicParameters();
@@ -30,8 +31,16 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             var query = "SELECT * FROM CityEvent WHERE Title LIKE CONCAT('%',@title,'%');";
             var parameters = new DynamicParameters();
             parameters.Add("title", title);
-            using var conn = _database.CreateConnection();
-            return conn.Query<CityEvent>(query, parameters).ToList();
+            try
+            {
+                using var conn = _database.CreateConnection();
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"Erro na execução da query (Argumento inválido).\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
+                return null;
+            }
         }
         public CityEvent SearchEventLocalDate(string local, DateTime dateTime)
         {
@@ -55,10 +64,10 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
                 using var conn = _database.CreateConnection();
                 return conn.Query<CityEvent>(query, parameters).ToList();
             }
-            catch (ArgumentException ex)
+            catch (ArgumentNullException ex)
             {
-                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
-                return null; //posso fazer isso?
+                Console.WriteLine($"Erro na execução da query (Argumento inválido).\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
+                return null;
             }
         }
 
@@ -74,16 +83,8 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             parameters.Add("Price", cityEvent.Price);
             parameters.Add("Status", cityEvent.Status);
 
-            try
-            {
-                using var conn = _database.CreateConnection();
-                return conn.Execute(query, parameters) == 1;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
-                return false;
-            }
+            using var conn = _database.CreateConnection();
+            return conn.Execute(query, parameters) == 1;
         }
 
         public bool UpdateEvent(long id, CityEvent cityEvent)
@@ -106,29 +107,26 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             parameters.Add("Price", cityEvent.Price);
             parameters.Add("Status", cityEvent.Status);
             parameters.Add("id", id);
-            try
-            {
-                using var conn = _database.CreateConnection();
-                return conn.Execute(query, parameters) == 1;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
-                return false;
-            }
+
+            using var conn = _database.CreateConnection();
+            return conn.Execute(query, parameters) == 1;
         }
 
-        public string DeleteEvent(long id)
+        public bool DeleteEvent(long id)
         {
             var reservations = SearchReservations(id);
-            if (reservations == 0)
+            if (reservations == -1)
+            {
+                return false;
+            }
+            else if (reservations == 0)
             {
                 var query = "DELETE FROM CityEvent WHERE IdEvent = @id";
                 var parameters = new DynamicParameters();
                 parameters.Add("id", id);
                 using var conn = _database.CreateConnection();
                 if (conn.Execute(query, parameters) == 1)
-                    return "Evento deletado com sucesso";
+                    return true;
             }
             else if (reservations > 0)
             {
@@ -137,9 +135,9 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
                 parameters.Add("id", id);
                 using var conn = _database.CreateConnection();
                 if (conn.Execute(query, parameters) == 1)
-                    return "Este evento possui reservas. Status alterado para inativo com sucesso";
+                    return true;
             }
-            return "Evento não encontrado";
+            return false;
         }
 
         private int SearchReservations(long id)
@@ -147,8 +145,21 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             var query = "SELECT Quantity FROM EventReservation WHERE IdEvent = @id";
             var parameters = new DynamicParameters();
             parameters.Add("id", id);
-            using var conn = _database.CreateConnection();
-            return conn.Query<int>(query, parameters).Sum();
+            try
+            {
+                using var conn = _database.CreateConnection();
+                return conn.Query<int>(query, parameters).Sum();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"Erro na execução da query de remoção do evento (Argumento inválido).\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
+                return -1;
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine($"Erro na execução da query de remoção do evento (Casting falhou).\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
+                return -1;
+            }
         }
     }
 }

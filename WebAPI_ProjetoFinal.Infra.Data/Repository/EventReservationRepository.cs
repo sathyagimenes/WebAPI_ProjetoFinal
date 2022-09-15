@@ -12,12 +12,21 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             _database = database;
         }
 
-        public List<EventReservation> SearchReservations()
+        public List<EventReservation> SearchReservations() //excluir
         {
             var query = "SELECT * FROM EventReservation";
-            using var conn = _database.CreateConnection();
-            return conn.Query<EventReservation>(query).ToList();
+            try
+            {
+                using var conn = _database.CreateConnection();
+                return conn.Query<EventReservation>(query).ToList();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"Erro na execução da query.\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
+                return null;
+            }
         }
+
         public List<EventReservation> SearchReservation(string personName, string title)
         {
             var query = @"SELECT IdReservation, res.IdEvent, PersonName, Quantity
@@ -27,8 +36,16 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             var parameters = new DynamicParameters();
             parameters.Add("personName", personName);
             parameters.Add("title", title);
-            using var conn = _database.CreateConnection();
-            return conn.Query<EventReservation>(query, parameters).ToList();
+            try
+            {
+                using var conn = _database.CreateConnection();
+                return conn.Query<EventReservation>(query, parameters).ToList();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"Erro na execução da query.\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
+                return null;
+            }
         }
 
         public bool InsertReservation(EventReservation reservation)
@@ -39,16 +56,9 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             parameters.Add("IdEvent", reservation.IdEvent);
             parameters.Add("PersonName", reservation.PersonName);
             parameters.Add("Quantity", reservation.Quantity);
-            try
-            {
-                using var conn = _database.CreateConnection();
-                return conn.Execute(query, parameters) == 1;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
-                return false;
-            }
+
+            using var conn = _database.CreateConnection();
+            return conn.Execute(query, parameters) == 1;
         }
         public bool UpdateReservationQuantity(long idReservation, EventReservation reservation)
         {
@@ -58,16 +68,10 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             var parameters = new DynamicParameters();
             parameters.Add("Quantity", reservation.Quantity);
             parameters.Add("idReservation", idReservation);
-            try
-            {
-                using var conn = _database.CreateConnection();
-                return conn.Execute(query, parameters) == 1;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
-                return false;
-            }
+
+            using var conn = _database.CreateConnection();
+            return conn.Execute(query, parameters) == 1;
+
         }
 
         public bool DeleteReservation(long id)
@@ -75,16 +79,9 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             var query = "DELETE FROM EventReservation WHERE IdReservation = @id";
             var parameters = new DynamicParameters();
             parameters.Add("id", id);
-            try
-            {
-                using var conn = _database.CreateConnection();
-                return conn.Execute(query, parameters) == 1;
-            }
-            catch (ArgumentException ex)
-            {
-                Console.WriteLine($"Erro ao comunicar com o banco de dados. Mensagem: {ex.Message}. Stack trace: {ex.StackTrace}");
-                return false;
-            }
+
+            using var conn = _database.CreateConnection();
+            return conn.Execute(query, parameters) == 1;
         }
     }
 }

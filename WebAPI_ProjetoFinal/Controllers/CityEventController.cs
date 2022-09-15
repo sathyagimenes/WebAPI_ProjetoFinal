@@ -19,6 +19,7 @@ namespace WebAPI_ProjetoFinal.Controllers
 
         [HttpGet("/CityEvent/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<CityEvent>> SearchEvents()
         {
             return Ok(_cityEvent.SearchEvents());
@@ -27,6 +28,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpGet("/CityEvent/{id}/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CityEvent> SearchEvent(long id)
         {
             var evento = _cityEvent.SearchEvent(id);
@@ -40,20 +42,25 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpGet("/CityEvent/{title}/SearchTitle")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<CityEvent>> SearchEventTitle(string title)
         {
             var evento = _cityEvent.SearchEventTitle(title);
-
-            if (evento == null || evento.Count == 0)
+            if (evento == null)
+            {
+                return BadRequest();
+            }
+            else if (evento.Count == 0)
             {
                 return NotFound();
             }
             return Ok(evento);
         }
 
-        [HttpGet("/CityEvent/{local}/SearchLocalDate")]
+        [HttpGet("/CityEvent/SearchLocalDate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CityEvent> SearchEventLocalDate(string local, DateTime dateTime)
         {
             var evento = _cityEvent.SearchEventLocalDate(local, dateTime);
@@ -67,10 +74,15 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpGet("/CityEvent/SearchByPrice")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<CityEvent> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime dateTime)
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<CityEvent> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime date)
         {
-            var evento = _cityEvent.SearchByPrice(minPrice, maxPrice, dateTime);
-            if (evento == null || evento.Count == 0)
+            var evento = _cityEvent.SearchByPrice(minPrice, maxPrice, date.Date);
+            if (evento == null)
+            {
+                return BadRequest();
+            }
+            else if (evento.Count == 0)
             {
                 return NotFound();
             }
@@ -107,15 +119,16 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpDelete("/CityEvent/{id}/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "admin")]
         public IActionResult DeleteEvent(long id)
         {
             var result = _cityEvent.DeleteEvent(id);
-            if (result == "Evento não encontrado")
+            if (result == false)
             {
-                return NotFound(result);
+                return NotFound();
             }
-            return Ok(result);
+            return NoContent();
         }
     }
 }
