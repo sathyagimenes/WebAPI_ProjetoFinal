@@ -49,15 +49,28 @@ Para o EventReservation, construa os métodos:
 - Remoção de uma reserva; *Autenticação e Autorização admin
 - Consulta de reserva pelo PersonName e Title do evento, utilizando similaridade para o title; *Autenticação
 <br/>
+Utilize para autenticação os seguintes parametros:
+
+```C#
+Audience = "APIEvents.com"
+Issuer = "APIClientes.com"
+key = "<chave secreta>"
+```
 <br/>
 
 ## :hammer: Como executar o programa
 - Clone o repositório em uma pasta local: `git clone https://github.com/sathyagimenes/WebAPI_ProjetoFinal.git`
 - Abra a solução do projeto com o Visual Studio: arquivo `WebAPI_ProjetoFinal.sln`
-- Abra o arquivo `appsettings.json` e informe os dados para estabelecer a conexão com o banco de dados.
+- Abra o arquivo `appsettings.json` e informe os dados para estabelecer a conexão com o banco de dados e a SecretKey.
 ```
   "ConnectionStrings": {
         "DefaultConnection": "Server= <Digite o endereço do servidor>; Database= <Informe a base de dados>; User Id= <Digite seu usuário>; Password= <Digite sua senha> ; Encrypt=False"
         }
+    "SecretKey": "<chave secreta>"
 ```
 - Execute o projeto com `CTRL + F5`
+
+### Token
+Para gerar o token de autenticação:
+- Clone o repositório da API Cliente: `git clone https://github.com/sathyagimenes/WEBAPI.Aula01.git`
+- Siga as intruções de execução informadas no `README.md` da API Cliente.
