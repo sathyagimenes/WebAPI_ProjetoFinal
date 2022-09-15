@@ -70,7 +70,6 @@ key = "<chave secreta>"
 ```
 - Execute o projeto com `CTRL + F5`
 
-### Token
-Para gerar o token de autenticação:
-- Clone o repositório da API Cliente: `git clone https://github.com/sathyagimenes/WEBAPI.Aula01.git`
+### Token - Para gerar o token de autenticação:
+- Clone o repositório da [API Cliente](https://github.com/sathyagimenes/WEBAPI.Aula01): `git clone https://github.com/sathyagimenes/WEBAPI.Aula01.git`
 - Siga as intruções de execução informadas no `README.md` da API Cliente.
