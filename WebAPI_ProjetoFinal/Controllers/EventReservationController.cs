@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
+using WebAPI_ProjetoFinal.Filters;
 
 namespace WebAPI_ProjetoFinal.Controllers
 {
@@ -49,6 +50,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpPost("/EventReservation/Insert")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [TypeFilter(typeof(QuantityValidationActionFilter))]
         [Authorize]
         public IActionResult InsertReservation(EventReservation eventReservation)
         {
@@ -63,10 +65,11 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [TypeFilter(typeof(QuantityValidationActionFilter))]
         [Authorize(Roles = "admin")]
-        public IActionResult UpdateReservationQuantity(long id, EventReservation reservation)
+        public IActionResult UpdateReservationQuantity(long id, EventReservation eventReservation)
         {
-            if (!_eventReservationService.UpdateReservationQuantity(id, reservation))
+            if (!_eventReservationService.UpdateReservationQuantity(id, eventReservation))
             {
                 return NotFound();
             }
