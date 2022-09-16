@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI_ProjetoFinal.Core.Dto;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 using WebAPI_ProjetoFinal.Filters;
@@ -78,7 +79,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         [TypeFilter(typeof(QuantityValidationActionFilter))]
         [Authorize(Roles = "admin")]
-        public IActionResult UpdateReservationQuantity(long id, EventReservation eventReservation)
+        public IActionResult UpdateReservationQuantity(long id, DtoUpdateReservationQuantityRequest eventReservation)
         {
             if (!_eventReservationService.UpdateReservationQuantity(id, eventReservation))
             {

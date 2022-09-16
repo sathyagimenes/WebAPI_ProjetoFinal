@@ -1,4 +1,5 @@
-﻿using WebAPI_ProjetoFinal.Core.Interfaces;
+﻿using WebAPI_ProjetoFinal.Core.Dto;
+using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 
 namespace WebAPI_ProjetoFinal.Core.Service
@@ -22,7 +23,7 @@ namespace WebAPI_ProjetoFinal.Core.Service
         {
             return _eventReservationRepository.InsertReservation(reservation);
         }
-        public bool UpdateReservationQuantity(long id, EventReservation reservation)
+        public bool UpdateReservationQuantity(long id, DtoUpdateReservationQuantityRequest reservation)
         {
             return _eventReservationRepository.UpdateReservationQuantity(id, reservation);
         }

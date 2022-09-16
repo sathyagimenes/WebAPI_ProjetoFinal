@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using WebAPI_ProjetoFinal.Core.Dto;
 using WebAPI_ProjetoFinal.Core.Interfaces;
 using WebAPI_ProjetoFinal.Core.Model;
 
@@ -60,7 +61,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             using var conn = _database.CreateConnection();
             return conn.Execute(query, parameters) == 1;
         }
-        public bool UpdateReservationQuantity(long idReservation, EventReservation reservation)
+        public bool UpdateReservationQuantity(long idReservation, DtoUpdateReservationQuantityRequest reservation)
         {
             var query = @"UPDATE EventReservation SET
                             Quantity = @Quantity
