@@ -20,6 +20,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [HttpGet("/CityEvent/Search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public ActionResult<List<CityEvent>> SearchEvents()
         {
             return Ok(_cityEvent.SearchEvents());
@@ -29,6 +32,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public ActionResult<CityEvent> SearchEvent(long id)
         {
             var evento = _cityEvent.SearchEvent(id);
@@ -43,6 +49,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public ActionResult<List<CityEvent>> SearchEventTitle(string title)
         {
             var evento = _cityEvent.SearchEventTitle(title);
@@ -61,6 +70,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public ActionResult<CityEvent> SearchEventLocalDate(string local, DateTime dateTime)
         {
             var evento = _cityEvent.SearchEventLocalDate(local, dateTime);
@@ -75,6 +87,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public ActionResult<CityEvent> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime date)
         {
             var evento = _cityEvent.SearchByPrice(minPrice, maxPrice, date.Date);
@@ -93,6 +108,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> InsertEvent(CityEvent cityEvent)
         {
@@ -108,6 +126,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         [Authorize(Roles = "admin")]
         public IActionResult UpdateEvent(long id, CityEvent cityEvent)
         {
@@ -123,6 +144,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         [Authorize(Roles = "admin")]
         public IActionResult DeleteEvent(long id)
         {
