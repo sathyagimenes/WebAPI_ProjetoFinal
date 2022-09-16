@@ -43,7 +43,7 @@ namespace WebAPI_ProjetoFinal.Controllers
             var reserva = _eventReservationService.SearchReservation(personName, title);
             if (reserva == null)
             {
-                return BadRequest();
+                return StatusCode(500);
             }
             else if(reserva.Count == 0)
             {
@@ -58,9 +58,9 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        [TypeFilter(typeof(QuantityValidationActionFilter))]
+        [TypeFilter(typeof(QuantityValidationInsertActionFilter))]
         [Authorize]
-        public IActionResult InsertReservation(EventReservation eventReservation)
+        public ActionResult<EventReservation> InsertReservation(EventReservation eventReservation)
         {
             if (!_eventReservationService.InsertReservation(eventReservation))
             {
@@ -102,7 +102,7 @@ namespace WebAPI_ProjetoFinal.Controllers
             {
                 return NotFound();
             }
-            return Ok();
+            return NoContent();
         }
 
     }

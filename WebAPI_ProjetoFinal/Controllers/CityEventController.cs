@@ -67,7 +67,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public ActionResult<CityEvent> SearchEventLocalDate(string local, DateTime dateTime)
         {
-            var evento = _cityEvent.SearchEventLocalDate(local, dateTime);
+            var evento = _cityEvent.SearchEventLocalDate(local, dateTime.Date);
             if (evento == null)
             {
                 return NotFound();
@@ -80,7 +80,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public ActionResult<CityEvent> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime date)
+        public ActionResult<List<CityEvent>> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime date)
         {
             var evento = _cityEvent.SearchByPrice(minPrice, maxPrice, date.Date);
             if (evento == null)
@@ -130,9 +130,8 @@ namespace WebAPI_ProjetoFinal.Controllers
         }
 
         [HttpDelete("/CityEvent/{id}/Delete")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
