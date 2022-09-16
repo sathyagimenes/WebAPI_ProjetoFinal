@@ -23,14 +23,6 @@ namespace WebAPI_ProjetoFinal.Filters
                     problem.Detail = "Erro ao tentar conectar ao banco de dados";
                     context.Result = new ObjectResult(problem);
                     break;
-                case ArgumentNullException:
-                    problem.Status = StatusCodes.Status501NotImplemented;
-                    context.Result = new ObjectResult(problem);
-                    break;
-                case ArgumentException:
-                    problem.Status = StatusCodes.Status501NotImplemented;
-                    context.Result = new ObjectResult(problem);
-                    break;
                 default:
                     context.Result = new ObjectResult(problem);
                     break;
