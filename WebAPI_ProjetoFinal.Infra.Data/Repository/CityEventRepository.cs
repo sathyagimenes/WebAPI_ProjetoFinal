@@ -111,12 +111,12 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             return conn.Execute(query, parameters) == 1;
         }
 
-        public bool DeleteEvent(long id)
+        public int DeleteEvent(long id)
         {
             var reservations = SearchReservations(id);
             if (reservations == -1)
             {
-                return false;
+                return -1; //comunica exceção
             }
             else if (reservations == 0)
             {
@@ -125,7 +125,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
                 parameters.Add("id", id);
                 using var conn = _database.CreateConnection();
                 if (conn.Execute(query, parameters) == 1)
-                    return true;
+                    return 1; //comunica remoção
             }
             else if (reservations > 0)
             {
@@ -134,9 +134,9 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
                 parameters.Add("id", id);
                 using var conn = _database.CreateConnection();
                 if (conn.Execute(query, parameters) == 1)
-                    return true;
+                    return 2; //comunica inativação
             }
-            return false;
+            return 0; //comunica notFound
         }
 
         private int SearchReservations(long id)

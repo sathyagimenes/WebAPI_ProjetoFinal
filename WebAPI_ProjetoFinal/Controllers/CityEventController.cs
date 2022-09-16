@@ -108,6 +108,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status501NotImplemented)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
@@ -126,6 +127,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status501NotImplemented)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
@@ -144,18 +146,31 @@ namespace WebAPI_ProjetoFinal.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status501NotImplemented)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        [Produces("text/plain")]
         [Authorize(Roles = "admin")]
-        public IActionResult DeleteEvent(long id)
+        public ActionResult<string> DeleteEvent(long id)
         {
             var result = _cityEvent.DeleteEvent(id);
-            if (result == false)
+            if (result == 1)
             {
-                return NotFound();
+                return Ok("Evento removido com sucesso");
             }
-            return NoContent();
+            else if (result == 2)
+            {
+                return Ok("O evento possui reservas. Status alterado para inativo com sucesso.");
+            }
+            if (result == -1)
+            {
+                return StatusCode(501, "Ocorreu um erro inesperado na solitação");
+            }
+            else
+            {
+                return NotFound($"Evento de id {id} não encontrado");
+            }
         }
     }
 }
