@@ -49,11 +49,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         public ActionResult<List<CityEvent>> SearchEventTitle(string title)
         {
             var evento = _cityEvent.SearchEventTitle(title);
-            if (evento == null)
-            {
-                return StatusCode(500);
-            }
-            else if (evento.Count == 0)
+            if (evento.Count == 0)
             {
                 return NotFound();
             }
@@ -83,11 +79,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         public ActionResult<List<CityEvent>> SearchByPrice(decimal minPrice, decimal maxPrice, DateTime date)
         {
             var evento = _cityEvent.SearchByPrice(minPrice, maxPrice, date.Date);
-            if (evento == null)
-            {
-                return StatusCode(500);
-            }
-            else if (evento.Count == 0)
+            if (evento.Count == 0)
             {
                 return NotFound();
             }

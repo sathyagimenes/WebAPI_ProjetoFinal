@@ -41,11 +41,7 @@ namespace WebAPI_ProjetoFinal.Controllers
         public ActionResult<List<EventReservation>> SearchReservation(string personName, string title)
         {
             var reserva = _eventReservationService.SearchReservation(personName, title);
-            if (reserva == null)
-            {
-                return StatusCode(500);
-            }
-            else if(reserva.Count == 0)
+            if(reserva.Count == 0)
             {
                 return NotFound();
             }
