@@ -11,13 +11,23 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
         {
             _database = database;
         }
-        public List<CityEvent> SearchEvents() // excluir
+        
+        public List<CityEvent> SearchEvents()
         {
             var query = "SELECT * FROM CityEvent";
-            using var conn = _database.CreateConnection();
-            return conn.Query<CityEvent>(query).ToList();
+            try 
+            { 
+                using var conn = _database.CreateConnection();
+                return conn.Query<CityEvent>(query).ToList();
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine($"Erro na execução da query (Argumento inválido).\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
+                throw;
+            }
         }
-        public CityEvent SearchEvent(long id) //excluir
+        
+        public CityEvent SearchEvent(long id)
         {
             var query = "SELECT * FROM CityEvent WHERE IdEvent = @id";
             var parameters = new DynamicParameters();
@@ -25,6 +35,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             using var conn = _database.CreateConnection();
             return conn.QueryFirstOrDefault<CityEvent>(query, parameters);
         }
+        
         public List<CityEvent> SearchEventTitle(string title)
         {
             var query = "SELECT * FROM CityEvent WHERE Title LIKE CONCAT('%',@title,'%');";
@@ -41,6 +52,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
                 throw;
             }
         }
+        
         public CityEvent SearchEventLocalDate(string local, DateTime dateTime)
         {
             var query = "SELECT * FROM CityEvent WHERE Local = @local AND CONVERT(DATE, dateHourEvent) = @dateTime";

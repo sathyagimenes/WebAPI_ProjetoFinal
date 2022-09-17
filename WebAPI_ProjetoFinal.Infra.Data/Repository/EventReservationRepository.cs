@@ -13,7 +13,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             _database = database;
         }
 
-        public List<EventReservation> SearchReservations() //excluir
+        public List<EventReservation> SearchReservations()
         {
             var query = "SELECT * FROM EventReservation";
             try
@@ -61,6 +61,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             using var conn = _database.CreateConnection();
             return conn.Execute(query, parameters) == 1;
         }
+        
         public bool UpdateReservationQuantity(long idReservation, DtoUpdateReservationQuantityRequest reservation)
         {
             var query = @"UPDATE EventReservation SET
