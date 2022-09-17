@@ -24,7 +24,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             catch (ArgumentNullException ex)
             {
                 Console.WriteLine($"Erro na execução da query.\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
-                return null;
+                throw;
             }
         }
 
@@ -45,7 +45,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             catch (ArgumentNullException ex)
             {
                 Console.WriteLine($"Erro na execução da query.\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
-                return null;
+                throw;
             }
         }
 

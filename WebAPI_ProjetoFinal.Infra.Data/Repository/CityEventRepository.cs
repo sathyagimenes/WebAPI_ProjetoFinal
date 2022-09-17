@@ -38,7 +38,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             catch (ArgumentNullException ex)
             {
                 Console.WriteLine($"Erro na execução da query (Argumento inválido).\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
-                return null;
+                throw;
             }
         }
         public CityEvent SearchEventLocalDate(string local, DateTime dateTime)
@@ -66,7 +66,7 @@ namespace WebAPI_ProjetoFinal.Infra.Data.Repository
             catch (ArgumentNullException ex)
             {
                 Console.WriteLine($"Erro na execução da query (Argumento inválido).\nTipo da exceção: {ex.GetType().Name}.\nMensagem: {ex.Message}.\nStack trace: {ex.StackTrace}");
-                return null;
+                throw;
             }
         }
 
