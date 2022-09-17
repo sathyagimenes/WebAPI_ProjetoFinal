@@ -61,7 +61,7 @@ key = "<chave secreta>"
 ## :hammer: Como executar o programa
 - Clone o repositório em uma pasta local: `git clone https://github.com/sathyagimenes/WebAPI_ProjetoFinal.git`
 - Abra a solução do projeto com o Visual Studio: arquivo `WebAPI_ProjetoFinal.sln`
-- Abra o arquivo `appsettings.json` e informe os dados para estabelecer a conexão com o banco de dados e a SecretKey.
+- Crie o arquivo `appsettings.json` e informe os dados para estabelecer a conexão com o banco de dados e a SecretKey.
 ```
   "ConnectionStrings": {
         "DefaultConnection": "Server= <Digite o endereço do servidor>; Database= <Informe a base de dados>; User Id= <Digite seu usuário>; Password= <Digite sua senha> ; Encrypt=False"
